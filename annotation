@@ -1,0 +1,6 @@
+## Annotate Gene Symbol
+res$symbol <- mapIds(org.Rn.eg.db,
+                     keys=row.names(res),
+                     column="SYMBOL",
+                     keytype="ENSEMBL",
+                     multiVals="first")
