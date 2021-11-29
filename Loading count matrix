@@ -1,0 +1,21 @@
+
+##Loading count matrix 
+setwd("XXXXXX")
+countData<-read.table("XXXX.tsv",header = T,stringsAsFactors = F,sep = "\t",check.names = F)
+colData=read.table('map.tsv',header = T,stringsAsFactors = F,sep = "\t")
+  countData=countData[!duplicated(countData$ID),]
+  colData$id=gsub("_.*","",colData$Sample)
+rownames(countData)=countData$ID
+countData=countData[,-1]
+rownames(colData)=colData[,1]
+all(rownames(colData) %in% colnames(countData))
+countData <- countData[, rownames(colData)]
+all(rownames(colData) == colnames(countData))
+
+
+dds <- DESeqDataSetFromMatrix(countData = countData,
+                              colData = colData,
+                              design =formula( ~ Group))
+                              
+ #Showing data detail
+head(assay(dds))
